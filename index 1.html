@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plant Disease Detector</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <h1>🌿 Plant Disease Detector</h1>
+      <p class="subtitle">Upload a plant image and let AI do the rest.</p>
+
+      <div class="upload-box" id="uploadBox">
+        <input type="file" id="imageUpload" accept="image/*" />
+        <img id="previewImage" src="" alt="Preview" />
+        <span class="upload-text">📤<br/>Choose File</span>
+      </div>
+
+      <button class="button" id="detectBtn">Detect Disease</button>
+
+      <div class="result" id="resultBox">
+        <p id="resultText">Detecting Disease.....(You can connect your model here).</p>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
