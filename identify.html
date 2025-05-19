@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Identify Plant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <h1>🌿 Identify Plant</h1>
+      <p class="subtitle">Upload a plant image to identify its species.</p>
+
+      <div class="upload-box" id="uploadBox">
+        <input type="file" id="imageUpload" accept="image/*" />
+        <img id="previewImage" src="" alt="Preview" />
+        <span class="upload-text">📤<br/>Choose File</span>
+      </div>
+
+      <button class="button" id="identifyBtn">Identify Plant</button>
+
+      <div class="result" id="resultBox">
+        <p id="resultText">Identifying plant species... (You can connect your model here).</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const previewImage = document.getElementById('previewImage');
+
+    imageUpload.addEventListener('change', () => {
+      const file = imageUpload.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

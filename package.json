@@ -1,0 +1,26 @@
+{
+  "name": "plant-disease-detector",
+  "version": "1.0.0",
+  "description": "Web app to detect plant diseases using AI in the browser (TensorFlow.js - Client Side).",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayvayron/plant-disease-detector.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jayvayron/plant-disease-detector/issues"
+  },
+  "homepage": "https://github.com/jayvayron/plant-disease-detector#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plant Assistant</title>
+  <style>
+    body {
+      background: url(https://images.unsplash.com/photo-1738769781051-2af14bd49bea?q=80&w=3538&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .hamburger {
+      position: absolute;
+      top: 25px;
+      right: 75px;
+      width: 30px;
+      height: 24px;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hamburger div {
+      height: 4px;
+      background: #a8e063;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .auth-box {
+      position: absolute;
+      top: 60px;
+      right: 75px;
+      background: rgba(34, 65, 21, 0.85);
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(34, 65, 21, 0.9);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 200px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #d0ffd0;
+      user-select: none;
+      z-index: 999;
+    }
+
+    .auth-box.show {
+      display: flex;
+    }
+
+    .auth-text {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: #b7e6a3;
+      text-align: center;
+    }
+
+    .auth-btn {
+      background: linear-gradient(135deg, #81c784, #66bb6a, #43a047);
+      border: none;
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(102, 187, 106, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+     
+    }
+
+    .auth-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 10px 20px rgba(102, 187, 106, 0.8);
+    }
+
+    .auth-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(102, 187, 106, 0.8);
+    }
+
+    .or-text {
+      color: #a8d5a3;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin: 6px 0;
+      user-select: none;
+    }
+
+    .main-heading {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #b2ff59, #69f0ae, #00e676);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 6px rgba(105, 240, 174, 0.2);
+    }
+
+    .tagline {
+      font-size: 1.4rem;
+      color: #e0ffe0;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .description {
+      max-width: 600px;
+      font-size: 1rem;
+      color: #d0ffd0;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(105, 240, 174, 0.1);
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .home-btn {
+      background: linear-gradient(135deg, #81c784, #66bb6a, #43a047);
+      border: none;
+      padding: 1rem 2.2rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(102, 187, 106, 0.5);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .home-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 10px 20px rgba(102, 187, 106, 0.6);
+    }
+
+    .home-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 8px rgba(102, 187, 106, 0.6);
+    }
+
+    #logoutBtn {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 75px;
+      background: linear-gradient(135deg, #a8e063, #56ab2f);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
+      z-index: 1000;
+    }
+
+    #logoutBtn:hover {
+      background: #85e085;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <!-- Hamburger (default) -->
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <!-- Logout button (hidden by default) -->
+    <button id="logoutBtn">🚪 Logout</button>
+
+    <!-- Login/Signup box -->
+    <div class="auth-box" id="authBox">
+      <div class="auth-text">Login to view your previous responses</div>
+      <button class="auth-btn" onclick="location.href='login.html'">Login</button>
+      <div class="or-text">or</div>
+      <button class="auth-btn" onclick="location.href='signup.html'">Sign Up</button>
+    </div>
+
+    <h1 class="main-heading">🌿 Nature's Helper: Your Smart Plant Assistant</h1>
+    <p class="tagline">Blending AI with Nature — for Greener, Healthier Plants</p>
+    <p class="description">
+      Welcome to Plant Assistant — your go-to AI companion for detecting plant diseases and identifying plant species. Whether you're a home gardener or a botany enthusiast, our tools empower you to care for your greens with ease and confidence. Start your journey towards smarter plant care now.
+    </p>
+    <div class="btn-container">
+      <button class="home-btn" onclick="location.href='detect.html'">🦠 Detect Disease</button>
+      <button class="home-btn" onclick="location.href='identify.html'">🌿 Identify Plant</button>
+    </div>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const authBox = document.getElementById('authBox');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      authBox.classList.toggle('show');
+    });
+
+    // Check if user is logged in
+    const username = localStorage.getItem('loggedInUser');
+
+    if (username) {
+      // Hide hamburger, show logout
+      hamburger.style.display = 'none';
+      authBox.style.display = 'none';
+      logoutBtn.style.display = 'block';
+
+      // Show greeting
+      const greeting = document.createElement('h2');
+      greeting.style.color = '#b2ff59';
+      greeting.style.fontSize = '2rem';
+      greeting.style.marginBottom = '1rem';
+      greeting.textContent = `Hey, ${username}! Welcome back 🌿`;
+
+      const overlay = document.querySelector('.overlay');
+      const mainHeading = document.querySelector('.main-heading');
+      overlay.insertBefore(greeting, mainHeading);
+    }
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
